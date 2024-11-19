@@ -43,7 +43,7 @@ const Layout = () => {
   const location = useLocation();
   
   // Liste des routes où on ne veut pas afficher Navbar et TopBar
-  const noHeaderRoutes = ['/login', '/register'];
+  const noHeaderRoutes = ['/login', '/register','/email-verification','/forget-password','/reset-password'];
   
   // Vérifie si le chemin actuel est dans la liste des routes sans header
   const shouldShowHeader = !noHeaderRoutes.includes(location.pathname);

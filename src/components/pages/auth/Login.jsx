@@ -210,7 +210,7 @@
 // export default Login;
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   Eye, EyeOff, Mail, Lock,
@@ -242,6 +242,12 @@ const CheckeredBackground = () => (
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleForgetPassword = () => {
+    navigate('/forget-password'); // Utilise le chemin défini dans vos routes
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -356,7 +362,9 @@ const Login = () => {
                     Remember me
                   </label>
                 </div>
-                <a href="#" className="text-sm text-blue-600 hover:text-blue-500">
+                <a 
+                 onClick={handleForgetPassword}
+                className="text-sm text-blue-600 hover:text-blue-500">
                   Forgot password?
                 </a>
               </div>
