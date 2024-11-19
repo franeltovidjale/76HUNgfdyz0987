@@ -1,0 +1,60 @@
+/* index.css */
+/* @import url('./styles/animations.css'); */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* Styles globaux personnalisés */
+@layer base {
+    html {
+      scroll-behavior: smooth;
+    }
+  
+    body {
+      @apply bg-gray-50 text-neutral-900;
+    }
+  
+    /* Styles pour les titres */
+    h1, h2, h3, h4, h5, h6 {
+      @apply font-bold tracking-tight;
+    }
+  
+    h1 {
+      @apply text-4xl md:text-5xl lg:text-6xl;
+    }
+  
+    h2 {
+      @apply text-3xl md:text-4xl lg:text-5xl;
+    }
+  
+    h3 {
+      @apply text-2xl md:text-3xl lg:text-4xl;
+    }
+  }
+  
+  /* Classes composées personnalisées */
+  @layer components {
+    .container-custom {
+      @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    }
+  
+    .btn-primary {
+      @apply bg-primary-600 hover:bg-primary-700 text-white 
+             px-4 py-2 rounded-lg transition-all duration-200
+             hover-lift;
+    }
+  
+    .btn-secondary {
+      @apply bg-secondary-600 hover:bg-secondary-700 text-white
+             px-4 py-2 rounded-lg transition-all duration-200
+             hover-lift;
+    }
+  
+    .card {
+      @apply bg-white rounded-lg shadow-sm p-6
+             hover:shadow-md transition-shadow duration-200;
+    }
+  }
+  
