@@ -1,5 +1,5 @@
 // // src/App.jsx (mis à jour)
-// import { BrowserRouter } from 'react-router-dom';
+// import { HashRouter } from 'react-router-dom';
 // import { ThemeProvider } from '@mui/material';
 // import { LanguageProvider } from './components/context/LanguageContext';
 // import { AuthProvider } from './components/context/AuthContext';
@@ -12,7 +12,7 @@
 //   return (
 //     <LanguageProvider>
 //       <AuthProvider>
-//         <BrowserRouter>
+//         <HashRouter>
 //           <ThemeProvider theme={theme}>
 //             <div className="min-h-screen bg-gray-50">
 //             <Navbar />
@@ -20,7 +20,7 @@
 //               <AppRouter />
 //             </div>
 //           </ThemeProvider>
-//         </BrowserRouter>
+//         </HashRouter>
 //       </AuthProvider>
 //     </LanguageProvider>
 //   );
@@ -29,7 +29,7 @@
 // export default App;
 
 // src/App.jsx
-import { BrowserRouter, useLocation } from 'react-router-dom';
+import { HashRouter, useLocation } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
 import { LanguageProvider } from './components/context/LanguageContext';
 import { AuthProvider } from './components/context/AuthContext';
@@ -65,11 +65,11 @@ const App = () => {
   return (
     <LanguageProvider>
       <AuthProvider>
-        <BrowserRouter>
+        <HashRouter>
           <ThemeProvider theme={theme}>
             <Layout />
           </ThemeProvider>
-        </BrowserRouter>
+        </HashRouter>
       </AuthProvider>
     </LanguageProvider>
   );
