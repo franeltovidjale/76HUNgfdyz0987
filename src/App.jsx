@@ -1,32 +1,4 @@
-// // src/App.jsx (mis à jour)
-// import { HashRouter } from 'react-router-dom';
-// import { ThemeProvider } from '@mui/material';
-// import { LanguageProvider } from './components/context/LanguageContext';
-// import { AuthProvider } from './components/context/AuthContext';
-// import { theme } from './components/theme';
-// import Navbar from './components/layouts/Navbar';
-// import AppRouter from './routes/routes';
-// import TopBar from './components/layouts/TopBar';
 
-// const App = () => {
-//   return (
-//     <LanguageProvider>
-//       <AuthProvider>
-//         <HashRouter>
-//           <ThemeProvider theme={theme}>
-//             <div className="min-h-screen bg-gray-50">
-//             <Navbar />
-//             <TopBar />
-//               <AppRouter />
-//             </div>
-//           </ThemeProvider>
-//         </HashRouter>
-//       </AuthProvider>
-//     </LanguageProvider>
-//   );
-// };
-
-// export default App;
 
 // src/App.jsx
 import { HashRouter, useLocation } from 'react-router-dom';
