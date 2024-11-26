@@ -11,7 +11,9 @@
 // }
 
 // tailwind.config.js
-const { colors } = require('./src/components/theme/colors');
+// const { colors } = require('./src/components/theme/colors');
+import { colors } from './src/components/theme/colors';
+
 
 module.exports = {
   content: [

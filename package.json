@@ -6,11 +6,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000",
-    "build": "vite build --outDir=dist",
+    "build": "vite build",
+    "deploy": "gh-pages -d dist",
     "lint": "eslint .",
     "preview": "vite preview",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "predeploy": "npm run build"
+   
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
