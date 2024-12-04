@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import axiosClient from '../../../axios';
 import { 
   Eye, EyeOff, User, Mail, Lock,
   Building2, UserCircle, ChevronRight
@@ -32,7 +33,33 @@ const CheckeredBackground = () => (
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [userType, setUserType] = useState('employer');
+  const [userType, setUserType] = useState('candidate');
+  const [role, setRole] = useState('candidate');
+
+
+const [email, setEmail] = useState('');
+const [password, setPassword] = useState('');
+const [passwordConfirmation, setPasswordConfirmation] = useState('');
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  
+  try {
+    const response = await axiosClient.post('/register', {
+      email,
+      password,
+      password_confirmation: passwordConfirmation,
+      role: userType
+    });
+    const token = response.data.access_token;
+    localStorage.setItem('TOKEN', token);
+    
+    // Redirection vers la page de vérification avec le token
+    window.location.href = `/verify-email/${response.data.user.verification_token}`;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -101,7 +128,7 @@ const Register = () => {
             {/* Account Type */}
             <div className="grid grid-cols-2 gap-4">
               {[
-                { type: 'employer', label: 'Employer' },
+                { type: 'company', label: 'Company' },
                 { type: 'candidate', label: 'Candidate' }
               ].map(({ type, label }) => (
                 <motion.button
@@ -130,9 +157,9 @@ const Register = () => {
             </div>
 
             {/* Form */}
-            <form className="space-y-6">
+            <form  onSubmit={handleSubmit} action="#" method="POST" className="space-y-6">
               <div className="space-y-4">
-                <div>
+                {/* <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Full Name
                   </label>
@@ -144,7 +171,7 @@ const Register = () => {
                       placeholder="John Doe"
                     />
                   </div>
-                </div>
+                </div> */}
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -154,6 +181,8 @@ const Register = () => {
                     <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
                     <input
                       type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       className="w-full pl-12 pr-4 py-3 bg-white text-gray-900 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
                       placeholder="john@example.com"
                     />
@@ -167,6 +196,9 @@ const Register = () => {
                   <div className="relative">
                     <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
                     <input
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+
                       type={showPassword ? "text" : "password"}
                       className="w-full pl-12 pr-12 py-3 bg-white text-gray-900 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
                       placeholder="••••••••"
@@ -191,7 +223,10 @@ const Register = () => {
                   <div className="relative">
                     <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
                     <input
+                     
                       type={showConfirmPassword ? "text" : "password"}
+                      value={passwordConfirmation}
+                      onChange={(e) => setPasswordConfirmation(e.target.value)}
                       className="w-full pl-12 pr-12 py-3 bg-white text-gray-900 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
                       placeholder="••••••••"
                     />

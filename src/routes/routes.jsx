@@ -20,10 +20,7 @@ export const publicRoutes = [
       path: '/pricing',
       label: 'Pricing'
     },
-    // {
-    //   path: '/support',
-    //   label: 'Support'
-    // },
+   
     {
       path: '/login',
       label: 'Login'
@@ -35,6 +32,10 @@ export const publicRoutes = [
     {
       path: '/email-verification',
       label: 'EmailCode'
+    },
+    {
+      path: '/verify-email/:token',
+      label: 'ConfirmationMail'
     },
     {
       path: ' /forget-password',
@@ -88,6 +89,7 @@ export const publicRoutes = [
   const EmailVerification = lazy(() => import('../components/pages/auth/EmailVerification'));
   const ForgetPassword = lazy(() => import('../components/pages/auth/ForgetPassword'));
   const ResetPassword = lazy(() => import('../components/pages/auth/ResetPassword'));
+  const ConfirmationMail  = lazy(() => import('../components/pages/auth/ConfirmationMail'));
   // const Dashboard = lazy(() => import('../pages/dashboard/Dashboard'));
   // const Profile = lazy(() => import('../pages/dashboard/Profile'));
   // const Messages = lazy(() => import('../pages/dashboard/Messages'));
@@ -157,6 +159,15 @@ export const publicRoutes = [
             element={
               <PublicRoute>
                 <ForgetPassword />
+              </PublicRoute>
+            }
+          />
+
+          <Route 
+            path="/verify-email/:token"
+            element={
+              <PublicRoute>
+                <ConfirmationMail/>
               </PublicRoute>
             }
           />
