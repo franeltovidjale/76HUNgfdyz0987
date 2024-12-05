@@ -29,22 +29,23 @@ export const publicRoutes = [
       path: '/register',
       label: 'Register'
     },
-    {
-      path: '/email-verification',
-      label: 'EmailCode'
-    },
-    {
-      path: '/verify-email/:token',
-      label: 'ConfirmationMail'
-    },
-    {
-      path: ' /forget-password',
-      label: 'ForgetPassword'
-    },
-    {
-      path: ' /reset-password',
-      label: 'ResetPassword'
-    }
+
+    // {
+    //   path: '/email-verification',
+    //   label: 'EmailCode'
+    // },
+    // {
+    //   path: '/verify-email/:token',
+    //   label: 'ConfirmationMail'
+    // },
+    // {
+    //   path: ' /forget-password',
+    //   label: 'ForgetPassword'
+    // },
+    // {
+    //   path: ' /reset-password',
+    //   label: 'ResetPassword'
+    // }
    
   ];
   
@@ -122,7 +123,14 @@ export const publicRoutes = [
       <Suspense fallback={<LoadingSpinner />}>
         <Routes>
           {/* Routes publiques */}
-          <Route path="/" element={<HomePage />} />
+          {/* <Route path="/" element={<HomePage />} /> */}
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <HomePage />
+              </ProtectedRoute>
+            } />
           <Route path="/find-job" element={<FindJobs />} />
           {/* <Route path="/employers" element={<Employers />} />
           <Route path="/candidates" element={<Candidates />} />
@@ -164,11 +172,11 @@ export const publicRoutes = [
           />
 
           <Route 
-            path="/verify-email/:token"
+            path="/verify-email"
             element={
-              <PublicRoute>
+              <ProtectedRoute>
                 <ConfirmationMail/>
-              </PublicRoute>
+              </ProtectedRoute>
             }
           />
           <Route

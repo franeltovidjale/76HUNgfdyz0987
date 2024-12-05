@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import axiosClient from '../../../axios';
+
 import { 
   Eye, EyeOff, User, Mail, Lock,
   Building2, UserCircle, ChevronRight
 } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 
 const GoogleIcon = () => (
   <svg viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
@@ -31,10 +32,15 @@ const CheckeredBackground = () => (
 );
 
 const Register = () => {
+
+  const { register } = useAuth(); // Extrayez register du contexte
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [userType, setUserType] = useState('candidate');
   const [role, setRole] = useState('candidate');
+
+  const [isLoading, setIsLoading] = useState(false);
 
 
 const [email, setEmail] = useState('');
@@ -43,21 +49,19 @@ const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
 const handleSubmit = async (e) => {
   e.preventDefault();
+  setIsLoading(true);
   
   try {
-    const response = await axiosClient.post('/register', {
+    await register({
       email,
       password,
       password_confirmation: passwordConfirmation,
       role: userType
     });
-    const token = response.data.access_token;
-    localStorage.setItem('TOKEN', token);
-    
-    // Redirection vers la page de vérification avec le token
-    window.location.href = `/verify-email/${response.data.user.verification_token}`;
   } catch (error) {
     console.error(error);
+  } finally {
+    setIsLoading(false);
   }
 };
 
@@ -260,7 +264,7 @@ const handleSubmit = async (e) => {
               </div>
 
               {/* Sign Up Button */}
-              <motion.button
+              {/* <motion.button
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
                 type="submit"
@@ -273,7 +277,34 @@ const handleSubmit = async (e) => {
                   </span>
                   <ChevronRight className="ml-2 w-5 h-5 text-white group-hover:translate-x-1 transition-transform" />
                 </div>
-              </motion.button>
+              </motion.button> */}
+
+              {/* Sign Up Button */}
+<motion.button
+  whileHover={{ scale: 1.01 }}
+  whileTap={{ scale: 0.99 }}
+  type="submit"
+  disabled={isLoading}
+  className="relative w-full group"
+>
+  <div className="absolute -inset-0.5 from-blue-600 to-blue-500 rounded-xl blur opacity-60 group-hover:opacity-100 transition duration-200"></div>
+  <div className="relative w-full px-6 py-3 bg-blue-600 hover:bg-blue-500 rounded-xl flex items-center justify-center">
+    {isLoading ? (
+      <div className="flex items-center space-x-2">
+        <svg className="animate-spin h-5 w-5 text-success" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span className="text-white font-medium">Creating account...</span>
+      </div>
+    ) : (
+      <>
+        <span className="text-white font-medium">Create Account</span>
+        <ChevronRight className="ml-2 w-5 h-5 text-white group-hover:translate-x-1 transition-transform" />
+      </>
+    )}
+  </div>
+</motion.button>
 
               {/* Separator */}
               <div className="relative my-8">

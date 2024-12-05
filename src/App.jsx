@@ -15,7 +15,7 @@ const Layout = () => {
   const location = useLocation();
   
   // Liste des routes où on ne veut pas afficher Navbar et TopBar
-  const noHeaderRoutes = ['/login', '/register','/email-verification','/forget-password','/reset-password'];
+  const noHeaderRoutes = ['/login', '/register','/email-verification','/forget-password','/reset-password','/verify-email'];
   
   // Vérifie si le chemin actuel est dans la liste des routes sans header
   const shouldShowHeader = !noHeaderRoutes.includes(location.pathname);
@@ -36,13 +36,13 @@ const Layout = () => {
 const App = () => {
   return (
     <LanguageProvider>
-      <AuthProvider>
-        <HashRouter>
+      <HashRouter>     {/* Router doit être à l'extérieur de AuthProvider */}
+        <AuthProvider>
           <ThemeProvider theme={theme}>
             <Layout />
           </ThemeProvider>
-        </HashRouter>
-      </AuthProvider>
+        </AuthProvider>
+      </HashRouter>
     </LanguageProvider>
   );
 };
