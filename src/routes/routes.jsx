@@ -123,14 +123,14 @@ export const publicRoutes = [
       <Suspense fallback={<LoadingSpinner />}>
         <Routes>
           {/* Routes publiques */}
-          {/* <Route path="/" element={<HomePage />} /> */}
-          <Route
+          <Route path="/" element={<HomePage />} />
+          {/* <Route
             path="/"
             element={
               <ProtectedRoute>
                 <HomePage />
               </ProtectedRoute>
-            } />
+            } /> */}
           <Route path="/find-job" element={<FindJobs />} />
           {/* <Route path="/employers" element={<Employers />} />
           <Route path="/candidates" element={<Candidates />} />
