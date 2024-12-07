@@ -52,7 +52,7 @@ const Navbar = () => {
       <div className="flex items-center gap-6">
         <nav className="flex gap-6">
           {publicRoutes
-            .filter(route => !['Login', 'Register','EmailCode','ForgetPassword','ResetPassword'].includes(route.label))
+            .filter(route => !['Login', 'Register','EmailCode','ForgetPassword','ResetPassword','EmailVerificationPending'].includes(route.label))
             .map(route => (
               <Link
                 key={route.path}
@@ -125,7 +125,7 @@ const Navbar = () => {
         </div>
         <List className="space-y-2">
           {publicRoutes
-            .filter(route => !['Login', 'Register'].includes(route.label))
+            .filter(route => !['Login', 'Register','EmailCode','ForgetPassword','ResetPassword','EmailVerificationPending'].includes(route.label))
             .map(route => (
               <ListItem
                 key={route.path}

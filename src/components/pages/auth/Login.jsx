@@ -424,6 +424,7 @@ import {
  ChevronRight
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import axiosClient from '../../../axios';
 
 
 
@@ -458,7 +459,7 @@ const Login = () => {
     credentials: '',
     general: ''
   });
-
+const [successMessage, setSuccessMessage] = useState('');
  const [showPassword, setShowPassword] = useState(false);
  const [email, setEmail] = useState('');
  const [password, setPassword] = useState('');
@@ -468,19 +469,60 @@ const Login = () => {
  const { login } = useAuth();
  const navigate = useNavigate();
 
- const handleSubmit = async (e) => {
+//  const handleSubmit = async (e) => {
+//   e.preventDefault();
+//   setIsLoading(true);
+//   setErrors({ email: '', password: '', credentials: '', general: '' });
+
+//   try {
+//     // Utiliser la méthode login du contexte au lieu d'un appel direct à axiosClient
+//     await login({
+//       email,
+//       password,
+//       remember: rememberMe
+//     });
+//     // La redirection est déjà gérée dans la méthode login du contexte
+//   } catch (error) {
+//     console.log('Error response:', error.response?.data);
+//     if (error.response) {
+//       switch (error.response.status) {
+//         case 422:
+//           const validationErrors = error.response.data.errors;
+//           setErrors(prev => ({
+//             ...prev,
+//             email: validationErrors.email ? validationErrors.email[0] : '',
+//             password: validationErrors.password ? validationErrors.password[0] : ''
+//           }));
+//           break;
+//         case 401:
+//           setErrors(prev => ({
+//             ...prev,
+//             credentials: error.response.data.errors?.credentials?.[0] || 'Identifiants incorrects'
+//           }));
+//           break;
+//         default:
+//           setErrors(prev => ({
+//             ...prev,
+//             general: 'Une erreur est survenue'
+//           }));
+//       }
+//     }
+//   } finally {
+//     setIsLoading(false);
+//   }
+//  };
+
+const handleSubmit = async (e) => {
   e.preventDefault();
   setIsLoading(true);
   setErrors({ email: '', password: '', credentials: '', general: '' });
 
   try {
-    // Utiliser la méthode login du contexte au lieu d'un appel direct à axiosClient
     await login({
       email,
       password,
       remember: rememberMe
     });
-    // La redirection est déjà gérée dans la méthode login du contexte
   } catch (error) {
     console.log('Error response:', error.response?.data);
     if (error.response) {
@@ -494,10 +536,22 @@ const Login = () => {
           }));
           break;
         case 401:
-          setErrors(prev => ({
-            ...prev,
-            credentials: error.response.data.errors?.credentials?.[0] || 'Identifiants incorrects'
-          }));
+          // Vérifier si c'est une erreur d'email non vérifié
+          if (error.response.data.email_verified === false) {
+            setErrors(prev => ({
+              ...prev,
+              credentials: 'Veuillez vérifier votre email avant de vous connecter.',
+              email_unverified: email
+            }));
+            
+            // Afficher le bouton de renvoi d'email
+            return;
+          } else {
+            setErrors(prev => ({
+              ...prev,
+              credentials: error.response.data.errors?.credentials?.[0] || 'Identifiants incorrects'
+            }));
+          }
           break;
         default:
           setErrors(prev => ({
@@ -508,6 +562,22 @@ const Login = () => {
     }
   } finally {
     setIsLoading(false);
+  }
+};
+
+const handleResendVerification = async () => {
+  try {
+    await axiosClient.post('/resend-verification-email', { email: errors.email_unverified });
+
+    
+    console.log('envoyé')
+    setSuccessMessage('Email de vérification renvoyé avec succès');
+    setTimeout(() => setSuccessMessage(''), 5000); // Le message disparaît après 5 secondes
+  } catch (error) {
+    setErrors(prev => ({
+      ...prev,
+      general: "Erreur lors du renvoi de l\'email de vérification"
+    }));
   }
 };
 
@@ -588,19 +658,46 @@ const handlePasswordChange = (e) => {
              </p>
            </div>
 
+           {/* Message de succès */}
+                {successMessage && (
+                  <div className="bg-green-50 border border-green-200 text-green-600 px-4 py-3 rounded-lg">
+                    <div className="flex items-center space-x-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-sm font-medium">{successMessage}</span>
+                    </div>
+                  </div>
+                )}
+
            {/* Form */}
            <form onSubmit={handleSubmit} className="space-y-6">
              <div className="space-y-4">
              {(errors.general || errors.credentials) && (
-    <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg">
-      <div className="flex items-center space-x-2">
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-        </svg>
-        <span className="text-sm font-medium">{errors.credentials || errors.general}</span>
-      </div>
-    </div>
-  )}
+              <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg">
+                <div className="flex items-center space-x-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-sm font-medium">{errors.credentials || errors.general}</span>
+                </div>
+              </div>
+            )}
+
+              {errors.email_unverified && (
+                <div className="mt-2">
+                  <button
+                    type="button"
+                    onClick={handleResendVerification}
+                    className="text-sm text-blue-600 hover:text-blue-500 flex items-center"
+                  >
+                    <svg className="w-4 h-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
+                    </svg>
+                    Renvoyer l'email de vérification
+                  </button>
+                </div>
+              )}
 
 <div>
   <label className="block text-sm font-medium text-gray-700 mb-1">

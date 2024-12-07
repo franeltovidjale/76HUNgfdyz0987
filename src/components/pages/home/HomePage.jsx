@@ -5,11 +5,37 @@ import { Button } from '@mui/material';
 import { useTranslation } from '../../context/LanguageContext';
 import StepCreateAccount from './StepCreateAccount';
 import PopularVacancies from './Vacancies';
+import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 
 const HomePage = () => {
   const { t } = useTranslation();
+  const { isAuthenticated, checkAuthStatus } = useAuth();
+  const navigate = useNavigate();
   const suggestions = ['Designer', 'Programming', 'Digital Marketing', 'Video', 'Animation'];
+
+
+  useEffect(() => {
+    let isMounted = true;
+  
+    const verifyAuth = async () => {
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Délai initial
+      if (isMounted) {
+        const isAuth = await checkAuthStatus();
+        if (!isAuth && isMounted) {
+          navigate('/login');
+        }
+      }
+    };
+  
+    verifyAuth();
+  
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <div className="container mx-auto px-4 py-12">

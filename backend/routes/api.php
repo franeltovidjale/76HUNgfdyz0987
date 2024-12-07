@@ -36,6 +36,10 @@ Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 Route::get('/verify-email/{token}', [AuthController::class, 'verifyEmail']);
 
 
+Route::post('/resend-verification-email', [AuthController::class, 'resendVerificationEmail']);
+
+Route::middleware('auth:api')->get('/user', [AuthController::class, 'user']);
+
 Route::get('/test', function () {
     return "sss";
 })->middleware('auth:api');

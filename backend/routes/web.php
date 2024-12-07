@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/email-verification', function () {
+    return view('emails.email_verification');
+})->name('email-verification');

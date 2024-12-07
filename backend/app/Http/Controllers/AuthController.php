@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Mail\VerificationEmail;
 use App\Mail\ResetPasswordEmail;
 use App\Mail\ForgotPasswordEmail;
+use Illuminate\Cache\RateLimiter;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Requests\LoginRequest;
@@ -22,6 +23,13 @@ use App\Http\Requests\ForgotPasswordRequest;
 class AuthController extends Controller
 {
     // Enregistrement de l'utilisateur
+
+    protected $limiter;
+
+    public function __construct(RateLimiter $limiter)
+    {
+        $this->limiter = $limiter;
+    }
 
     public function register(Request $request)
     {
@@ -68,12 +76,20 @@ class AuthController extends Controller
 
             DB::commit(); // Valider la transaction
 
-            // Retourner la réponse de succès avec le token
-            return response()->json([
-                'user' => $user,
-                'access_token' => $token,
-                'token_type' => 'Bearer',
-            ], 201);
+            // // Retourner la réponse de succès avec le token
+            // return response()->json([
+            //     'user' => $user,
+            //     'access_token' => $token,
+            //     'token_type' => 'Bearer',
+            // ], 201);
+
+             // Retourner la réponse SANS token JWT
+        return response()->json([
+            'message' => 'Inscription réussie. Veuillez vérifier votre email.',
+            'email' => $user->email,
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+        ], 201);
         } catch (\Exception $e) {
             DB::rollBack(); // Annuler la transaction
 
@@ -84,7 +100,7 @@ class AuthController extends Controller
             ], 500);
         }
     }
-    // Connexion de l'utilisateur
+    // Connexion de l'utilisateur fawaz
 
     public function login(Request $request)
     {
@@ -138,6 +154,90 @@ class AuthController extends Controller
             ], 500);
         }
     }
+    // franel
+
+    public function user(Request $request)
+{
+    try {
+        $user = JWTAuth::parseToken()->authenticate();
+        return response()->json(['user' => $user], 200);
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'Utilisateur non authentifié'], 401);
+    }
+}
+
+//     public function login(Request $request)
+// {
+//     // Définir les règles de validation
+//         $validator = Validator::make($request->all(), [
+//             'email' => 'required|email',
+//             'password' => 'required|min:8',
+//         ], [
+//             'email.required' => 'L\'adresse email est obligatoire.',
+//             'password.required' => 'Le mot de passe est obligatoire.',
+//             'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
+//         ]);
+
+      
+
+//         // Vérifier si la validation échoue
+//         if ($validator->fails()) {
+
+//              // Incrémenter le compteur de tentatives
+//              $this->limiter->hit($request->ip());
+
+//             return response()->json([
+//                 'message' => 'Données invalides.',
+//                 'errors' => $validator->errors(),
+//             ], 422);
+//         }
+
+//     try {
+//         $credentials = $request->only('email', 'password');
+        
+//         // Vérifier d'abord si l'utilisateur existe
+//         $user = User::where('email', $credentials['email'])->first();
+
+//         if ($user && !Hash::check($request->password, $user->password)) {
+//             return response()->json([
+//                 'message' => 'Mot de passe incorrect.',
+//             ], 401);
+//         }
+        
+//         // Vérifier si l'email est vérifié
+//         if ($user && is_null($user->email_verified_at)) {
+//             return response()->json([
+//                 'message' => 'Veuillez vérifier votre email avant de vous connecter.',
+//                 'email_verified' => false
+//             ], 401);
+//         }
+
+        
+
+//         // Tentative de connexion
+//         if (!$token = JWTAuth::attempt($credentials)) {
+//             return response()->json([
+//                 'message' => 'Identifiants incorrects.',
+//             ], 401);
+//         }
+//          // Réinitialiser le compteur en cas de succès
+//          $this->limiter->clear($request->ip());
+
+//         // Si on arrive ici, l'email est vérifié et les identifiants sont corrects
+//         return response()->json([
+//             'user' => $user,
+//             'access_token' => $token,
+//             'token_type' => 'Bearer',
+//             'email_verified' => true
+//         ], 200);
+//     } catch (\Exception $e) {
+//         $this->limiter->hit($request->ip());
+//         return response()->json([
+//             'message' => 'Une erreur est survenue lors de la connexion.',
+//             'error' => $e->getMessage()
+//         ], 500);
+//     }
+// }
 
 
     // Déconnexion de l'utilisateur
@@ -158,24 +258,47 @@ class AuthController extends Controller
     }
 
     //Vérification de l'email lors de l"inscription
+    // public function verifyEmail($token)
+    // {
+    //     $user = User::where('verification_token', $token)->first();
+
+    //     // dd($user);
+
+    //     if (!$user) {
+    //         return response()->json([
+    //             'message' => 'Lien de vérification invalide.',
+    //         ], 404);
+    //     }
+
+    //     $user->email_verified_at = now();
+    //     $user->verification_token = null; // Supprime le token après vérification
+    //     $user->save();
+
+    //      // Construisez l'URL de redirection
+    //      $redirectUrl = 'http://localhost:3000/';
+
+    //     return response()->json([
+    //         'message' => 'Email vérifié avec succès. Vous pouvez maintenant vous connecter.',
+    //         'verified' => true,
+    //         'redirectUrl' => $redirectUrl
+    //     ], 201);
+    // }
+
     public function verifyEmail($token)
-    {
-        $user = User::where('verification_token', $token)->first();
+{
+    $user = User::where('verification_token', $token)->first();
 
-        if (!$user) {
-            return response()->json([
-                'message' => 'Lien de vérification invalide.',
-            ], 404);
-        }
-
-        $user->email_verified_at = now();
-        $user->verification_token = null; // Supprime le token après vérification
-        $user->save();
-
-        return response()->json([
-            'message' => 'Email vérifié avec succès.',
-        ], 201);
+    if (!$user) {
+        return redirect()->route('email-verification')->with('error', 'Lien de vérification invalide.');
     }
+
+    $user->email_verified_at = now();
+    $user->verification_token = null;
+    $user->save();
+
+    return redirect()->route('email-verification')->with('success', 'Email vérifié avec succès. Vous pouvez maintenant vous connecter.');
+}
+ 
 
 
     // Demande de réinitialisation du mot de passe
@@ -326,6 +449,49 @@ class AuthController extends Controller
             return response()->json(['message' => 'Une erreur est survenue. Veuillez réessayer plus tard.'], 500);
         }
     }
+
+    // franel 
+    public function resendVerificationEmail(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'email' => 'required|email|exists:users,email'
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'message' => 'Email invalide.',
+        ], 422);
+    }
+
+    try {
+        $user = User::where('email', $request->email)->first();
+
+        if ($user->email_verified_at) {
+            return response()->json([
+                'message' => 'Cet email est déjà vérifié.',
+            ], 400);
+        }
+
+        // Générer un nouveau token si nécessaire
+        if (!$user->verification_token) {
+            $user->verification_token = Str::random(60);
+            $user->save();
+        }
+
+        // Envoyer l'email de vérification
+        Mail::to($user->email)->send(new VerificationEmail($user));
+
+        return response()->json([
+            'message' => 'Un nouveau lien de vérification a été envoyé à votre adresse email.'
+        ], 200);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'message' => 'Une erreur est survenue lors de l\'envoi de l\'email.',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+}
 
 
     // Réinitialisation du mot de passe

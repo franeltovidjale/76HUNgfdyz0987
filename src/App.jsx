@@ -1,7 +1,7 @@
 
 
 // src/App.jsx
-import { HashRouter, useLocation } from 'react-router-dom';
+import { BrowserRouter, useLocation } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
 import { LanguageProvider } from './components/context/LanguageContext';
 import { AuthProvider } from './components/context/AuthContext';
@@ -15,7 +15,7 @@ const Layout = () => {
   const location = useLocation();
   
   // Liste des routes où on ne veut pas afficher Navbar et TopBar
-  const noHeaderRoutes = ['/login', '/register','/email-verification','/forget-password','/reset-password','/verify-email'];
+  const noHeaderRoutes = ['/login', '/register','/email-verification','/forget-password','/reset-password','/email-verification-pending'];
   
   // Vérifie si le chemin actuel est dans la liste des routes sans header
   const shouldShowHeader = !noHeaderRoutes.includes(location.pathname);
@@ -36,13 +36,13 @@ const Layout = () => {
 const App = () => {
   return (
     <LanguageProvider>
-      <HashRouter>     {/* Router doit être à l'extérieur de AuthProvider */}
+      <BrowserRouter>     {/* Router doit être à l'extérieur de AuthProvider */}
         <AuthProvider>
           <ThemeProvider theme={theme}>
             <Layout />
           </ThemeProvider>
         </AuthProvider>
-      </HashRouter>
+      </BrowserRouter>
     </LanguageProvider>
   );
 };

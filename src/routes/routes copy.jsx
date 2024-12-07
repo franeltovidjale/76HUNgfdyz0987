@@ -9,7 +9,7 @@ const VerificationRoute = ({ children }) => {
 export const publicRoutes = [
     {
       path: '/',
-      label: 'Login'
+      label: 'Home'
     },
     {
       path: '/find-job',
@@ -100,10 +100,9 @@ export const publicRoutes = [
   // const Support = lazy(() => import('../pages/Support'));
   const Login = lazy(() => import('../components/pages/auth/Login'));
   const Register = lazy(() => import('../components/pages/auth/Register'));
-
   const ForgetPassword = lazy(() => import('../components/pages/auth/ForgetPassword'));
   const ResetPassword = lazy(() => import('../components/pages/auth/ResetPassword'));
-  const ConfirmationMail  = lazy(() => import('../components/pages/auth/ConfirmationMail'));
+  // const ConfirmationMail  = lazy(() => import('../components/pages/auth/ConfirmationMail'));
   // const EmailVerificationPending  = lazy(() => import('../components/pages/auth/EmailVerificationPending'));
  
   // const Profile = lazy(() => import('../pages/dashboard/Profile'));
@@ -154,7 +153,14 @@ export const publicRoutes = [
 
 
         {/* Mettre la route de vérification d'email en premier et avec VerificationRoute */}
-        
+        {/* <Route
+          path="/verify-email/:token"
+          element={
+            <VerificationRoute>
+              <ConfirmationMail />
+            </VerificationRoute>
+          }
+        /> */}
 
           {/* Routes d'authentification */} 
           <Route
@@ -181,7 +187,7 @@ export const publicRoutes = [
               </PublicRoute>
             }
           />
-           
+            
           
           <Route
             path="/forget-password"

@@ -145,11 +145,11 @@
 
       <!-- Confirmation Button -->
       <div class="button-container">
-        <a href="http://localhost:3000/verify-email/{{$user->verification_token }}" target="_blank">Confirmer mon compte</a>
+        <a href="http://localhost:8000/api/verify-email/{{$user->verification_token }}" target="_blank">Confirmer mon compte</a>
       </div>
 
       <p>Si le bouton ne fonctionne pas, copiez et collez ce lien dans votre navigateur :</p>
-      <p><a href="http://localhost:3000/verify-email/{{$user->verification_token }}">http://localhost:3000/verify-email/{{$user->verification_token }}</a></p>
+      <p><a href="http://localhost:3000/api/verify-email/{{$user->verification_token }}">http://localhost:3000/verify-email/{{$user->verification_token }}</a></p>
     </div>
 
     <!-- Footer -->
