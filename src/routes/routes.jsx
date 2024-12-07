@@ -8,7 +8,7 @@ const VerificationRoute = ({ children }) => {
 
 export const publicRoutes = [
     {
-      path: '/',
+      path: '/login',
       label: 'Login'
     },
     {
