@@ -502,51 +502,112 @@ class AuthController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function resetPassword(Request $request)
-    {
-        // Validation des données de la demande
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email|exists:password_reset_tokens,email',
-            'token' => 'required',
-            'password' => 'required|min:8', // Mot de passe confirmé
-        ]);
+    // public function resetPassword(Request $request)
+    // {
+    //     // Validation des données de la demande
+    //     $validator = Validator::make($request->all(), [
+    //         'email' => 'required|email|exists:password_reset_tokens,email',
+    //         'token' => 'required',
+    //         'password' => 'required|min:8', // Mot de passe confirmé
+    //     ]);
 
-        if ($validator->fails()) {
-            return response()->json(['error' => 'Données invalides.'], 401);
-        }
+    //     if ($validator->fails()) {
+    //         return response()->json(['error' => 'Données invalides.'], 401);
+    //     }
 
-        // Début de la transaction de base de données
-        DB::beginTransaction();
+    //     // Début de la transaction de base de données
+    //     DB::beginTransaction();
 
-        try {
-            // Vérification de la présence du token
-            $resetRecord = DB::table('password_reset_tokens')->where('email', $request->email)->where("used", false)->first();
+    //     try {
+    //         // Vérification de la présence du token
+    //         $resetRecord = DB::table('password_reset_tokens')->where('email', $request->email)->where("used", false)->first();
 
-            if (!$resetRecord || !Hash::check($request->token, $resetRecord->token)) {
-                return response()->json(['message' => 'Le lien de réinitialisation est invalide ou a expiré. Reprenez le processus'], 401);
-            }
+    //         if (!$resetRecord || !Hash::check($request->token, $resetRecord->token)) {
+    //             return response()->json(['message' => 'Le lien de réinitialisation est invalide ou a expiré. Reprenez le processus'], 401);
+    //         }
 
 
-            // Mise à jour du mot de passe
-            $user = User::where('email', $request->email)->first();
-            $user->password = Hash::make($request->password); // Hachage du nouveau mot de passe
-            $user->save();
+    //         // Mise à jour du mot de passe
+    //         $user = User::where('email', $request->email)->first();
+    //         $user->password = Hash::make($request->password); // Hachage du nouveau mot de passe
+    //         $user->save();
 
-            // Marquer le token comme utilisé après la réinitialisation
-            DB::table('password_reset_tokens')->where('email', $request->email)->update(['used' => true]);
+    //         // Marquer le token comme utilisé après la réinitialisation
+    //         DB::table('password_reset_tokens')->where('email', $request->email)->update(['used' => true]);
 
-            // Commit de la transaction
-            DB::commit();
+    //         // Commit de la transaction
+    //         DB::commit();
 
-            return response()->json(['message' => 'Votre mot de passe a été réinitialisé avec succès.'], 201);
-        } catch (\Exception $e) {
-            // En cas d'erreur, rollback de la transaction
-            DB::rollBack();
+    //         // return response()->json(['message' => 'Votre mot de passe a été réinitialisé avec succès.'], 201);
+    //         return redirect()->away('http://localhost:3000/login?reset=success');
+    //     } catch (\Exception $e) {
+    //         // En cas d'erreur, rollback de la transaction
+    //         DB::rollBack();
 
-            return response()->json([
-                'message' => 'Une erreur est survenue. Veuillez réessayer plus tard.',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
+    //         return response()->json([
+    //             'message' => 'Une erreur est survenue. Veuillez réessayer plus tard.',
+    //             'error' => $e->getMessage(),
+    //         ], 500);
+    //     }
+    // }
+
+    // Dans le contrôleur AuthController, modifiez la méthode resetPassword :
+public function resetPassword(Request $request)
+{
+    // Validation des données de la demande
+    $validator = Validator::make($request->all(), [
+        'email' => 'required|email|exists:password_reset_tokens,email',
+        'token' => 'required',
+        'password' => 'required|min:8|confirmed', // Ajout de confirmed pour vérifier password_confirmation
+    ], [
+        'email.required' => 'L\'email est requis',
+        'email.email' => 'L\'email n\'est pas valide',
+        'email.exists' => 'Cet email n\'existe pas',
+        'password.required' => 'Le mot de passe est requis',
+        'password.min' => 'Le mot de passe doit faire au moins 8 caractères',
+        'password.confirmed' => 'Les mots de passe ne correspondent pas',
+    ]);
+
+    if ($validator->fails()) {
+        return back()
+            ->withErrors($validator)
+            ->withInput();
     }
+
+    DB::beginTransaction();
+
+    try {
+        // Vérification de la présence du token
+        $resetRecord = DB::table('password_reset_tokens')
+            ->where('email', $request->email)
+            ->where("used", false)
+            ->first();
+
+        if (!$resetRecord || !Hash::check($request->token, $resetRecord->token)) {
+            return back()->withErrors([
+                'token' => 'Le lien de réinitialisation est invalide ou a expiré. Reprenez le processus'
+            ]);
+        }
+
+        // Mise à jour du mot de passe
+        $user = User::where('email', $request->email)->first();
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        // Marquer le token comme utilisé
+        DB::table('password_reset_tokens')
+            ->where('email', $request->email)
+            ->update(['used' => true]);
+
+        DB::commit();
+
+        return redirect()->away('http://localhost:3000/login?reset=success');
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return back()->withErrors([
+            'error' => 'Une erreur est survenue lors de la réinitialisation du mot de passe.'
+        ]);
+    }
+}
 }

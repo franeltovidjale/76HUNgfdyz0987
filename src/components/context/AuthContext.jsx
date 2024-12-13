@@ -213,7 +213,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('TOKEN', token);
       setIsAuthenticated(true);
       setUser(response.data.user);
-      navigate('/dashboard');
+      navigate('/dashboard-auth');
       
       return response;
     } catch (error) {
@@ -257,7 +257,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem('TOKEN');
       setIsAuthenticated(false);
       setUser(null);
-      navigate('/login');
+      navigate('/');
     }
   };
 

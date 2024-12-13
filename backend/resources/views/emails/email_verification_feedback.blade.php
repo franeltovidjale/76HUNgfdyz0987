@@ -29,11 +29,11 @@
         @endif
 
         <h2 class="text-2xl font-bold text-gray-900 mb-4">Email Verification</h2>
-        <p class="text-gray-600 mb-6">
-            Your email has been successfully verified. You can now proceed to login.
+        <p class="text-green-600 mb-6">
+            Votre email a été vérifié avec succès. Vous pouvez maintenant vous connecter.
         </p>
         <a target="_blank" href="http://localhost:3000/login" class="bg-blue-600 hover:bg-blue-500 text-white font-medium py-3 px-6 rounded-lg w-full block">
-            Go to Login
+           Page de Connexion
         </a>
     </div>
 </body>

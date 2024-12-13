@@ -6,16 +6,17 @@ import { ThemeProvider } from '@mui/material';
 import { LanguageProvider } from './components/context/LanguageContext';
 import { AuthProvider } from './components/context/AuthContext';
 import { theme } from './components/theme';
-import Navbar from './components/layouts/Navbar';
+
 import AppRouter from './routes/routes';
-import TopBar from './components/layouts/TopBar';
+
+import Header from './components/layouts/Header';
 
 // Composant Layout qui gère l'affichage conditionnel
 const Layout = () => {
   const location = useLocation();
   
   // Liste des routes où on ne veut pas afficher Navbar et TopBar
-  const noHeaderRoutes = ['/login', '/register','/email-verification','/forget-password','/reset-password','/email-verification-pending','/'];
+  const noHeaderRoutes = ['/login', '/register','/email-verification','/forget-password','/reset-password','/email-verification-pending'];
   
   // Vérifie si le chemin actuel est dans la liste des routes sans header
   const shouldShowHeader = !noHeaderRoutes.includes(location.pathname);
@@ -24,8 +25,8 @@ const Layout = () => {
     <div className="min-h-screen bg-gray-50">
       {shouldShowHeader && (
         <>
-          <Navbar />
-          <TopBar />
+          <Header />
+          
         </>
       )}
       <AppRouter />

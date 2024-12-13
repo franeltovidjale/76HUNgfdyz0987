@@ -11,7 +11,7 @@
       padding: 0;
       width: 100%;
       font-family: Arial, sans-serif;
-      background-color: #f3f3f3;
+      background-color: #F0F6FF; /* primary-50 */
     }
 
     /* Container */
@@ -20,13 +20,13 @@
       margin: 30px auto;
       background-color: #ffffff;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 4px 12px rgba(51, 102, 255, 0.15); /* primary-500 with opacity */
       overflow: hidden;
     }
 
     /* Header */
     .header {
-      background-color: #E65425;
+      background-color: #3366FF; /* primary-500 */
       padding: 30px;
       text-align: center;
       color: #ffffff;
@@ -46,31 +46,31 @@
     /* Email Content */
     .email-content {
       padding: 40px 25px;
-      color: #333333;
+      color: #0A1433; /* primary-900 */
     }
     .email-content h2 {
       font-size: 24px;
-      color: #E65425;
+      color: #2952CC; /* primary-600 */
       margin-bottom: 15px;
       text-align: center;
     }
     .email-content p {
       font-size: 16px;
       line-height: 1.8;
-      color: #555555;
+      color: #000; /* primary-800 */
       margin: 10px 0;
       text-align: center;
     }
     .email-content a {
-      color: #E65425;
+      color: #3366FF; /* primary-500 */
       text-decoration: none;
     }
 
     /* Divider */
     .divider {
       height: 1px;
-      background-color: #E65425;
-      opacity: 0.3;
+      background-color: #8DB6FF; /* primary-300 */
+      opacity: 0.5;
       margin: 30px 0;
     }
 
@@ -80,7 +80,7 @@
       margin: 40px 0;
     }
     .button-container a {
-      background: linear-gradient(135deg, #E65425, #ff7846);
+      background: linear-gradient(135deg, #3366FF, #5B8DEF); /* primary-500 to primary-400 */
       color: #ffffff;
       padding: 14px 30px;
       border-radius: 50px;
@@ -88,27 +88,27 @@
       font-weight: bold;
       text-decoration: none;
       display: inline-block;
-      box-shadow: 0 4px 10px rgba(230, 84, 37, 0.4);
+      box-shadow: 0 4px 10px rgba(51, 102, 255, 0.3); /* primary-500 with opacity */
     }
     .button-container a:hover {
-      background: linear-gradient(135deg, #ff7846, #E65425);
-      box-shadow: 0 6px 12px rgba(230, 84, 37, 0.6);
+      background: linear-gradient(135deg, #2952CC, #3366FF); /* primary-600 to primary-500 */
+      box-shadow: 0 6px 12px rgba(51, 102, 255, 0.4); /* primary-500 with opacity */
     }
 
     /* Footer */
     .footer {
-      background-color: #f7f7f7;
+      background-color: #F0F6FF; /* primary-50 */
       padding: 25px;
       text-align: center;
       font-size: 14px;
-      color: #777777;
+      color: #000; /* primary-700 */
     }
     .footer p {
       margin: 5px 0;
       line-height: 1.6;
     }
     .footer a {
-      color: #E65425;
+      color: #3366FF; /* primary-500 */
       text-decoration: none;
     }
 
@@ -154,7 +154,7 @@
 
     <!-- Footer -->
     <div class="footer">
-      <p>Si vous avez des questions, contactez-nous à <a href="mailto:contact@jobexpress.com">contact@jobexpress.com</a></p>
+      <p>Si vous avez des questions, contactez-nous à <a href="mailto:contact@happijob.com">contact@happijob.com</a></p>
       <p>&copy; 2024 JobExpress. Tous droits réservés.</p>
     </div>
   </div>

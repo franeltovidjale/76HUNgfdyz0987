@@ -28,13 +28,15 @@ const TopBar = () => {
   const navigate = useNavigate();
 
   const handleSignIn = () => {
-    navigate('/register'); // Utilise le chemin défini dans vos routes
+    navigate('/login'); // Utilise le chemin défini dans vos routes
   };
 
 
   return (
-    <div className="w-full border-b border-gray-200 bg-white">
-      <div className="container mx-auto px-4 py-3">
+    // <div className="w-full border-b border-gray-200 bg-white">
+    //   <div className="container mx-auto px-4 py-3">
+    <div className="w-full border-b border-gray-200 bg-transparent">
+    <div className="container mx-auto px-4 py-3">
         <div className="flex flex-col lg:flex-row items-center gap-4">
           {/* Logo */}
           <div className="w-full lg:w-auto flex justify-between items-center">
@@ -46,7 +48,7 @@ const TopBar = () => {
               >
                 <path d="M20 6H16V4C16 2.89 15.11 2 14 2H10C8.89 2 8 2.89 8 4V6H4C2.89 6 2.01 6.89 2.01 8L2 19C2 20.11 2.89 21 4 21H20C21.11 21 22 20.11 22 19V8C22 6.89 21.11 6 20 6ZM10 4H14V6H10V4ZM20 19H4V8H20V19Z"/>
               </svg>
-              <span className="ml-2 text-xl font-semibold text-gray-900">JobExpress</span>
+              <span className="ml-2 text-xl font-semibold text-gray-900">Happi Job</span>
             </Link>
 
             {/* Boutons version mobile */}
@@ -61,7 +63,7 @@ const TopBar = () => {
                   fontWeight: 'bold'
                 }}
               >
-                Sign In
+                Connexion
               </Button>
               <Button
                 variant="contained"
@@ -104,7 +106,7 @@ const TopBar = () => {
                 
               }}
             >
-              Sign In
+              Connexion
             </Button>
             <Button
               variant="contained"

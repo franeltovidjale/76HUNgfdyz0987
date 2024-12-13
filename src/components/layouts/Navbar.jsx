@@ -50,7 +50,7 @@ const Navbar = () => {
   const DesktopNav = () => (
     <Toolbar className="justify-between">
       <div className="flex items-center gap-6">
-        <nav className="flex gap-6">
+        <nav className="flex gap-6 " >
           {publicRoutes
             .filter(route => !['Login', 'Register','EmailCode','ForgetPassword','ResetPassword','EmailVerificationPending'].includes(route.label))
             .map(route => (
@@ -62,7 +62,7 @@ const Navbar = () => {
                   hover:bg-primary-50 hover:text-primary-600
                   ${location.pathname === route.path
                     ? 'bg-primary-50 text-primary-600'
-                    : 'text-neutral-600 hover:text-primary-600'
+                    : 'text-neutral-700 hover:text-primary-600'
                   }
                 `}
               >
@@ -148,10 +148,35 @@ const Navbar = () => {
     </Drawer>
   );
 
-  return (
-    <>
-    <div className={`${trigger ? 'h-16' : 'h-20'} transition-all duration-300`} />
-    <AppBar position="fixed" color="transparent" elevation={0} className={navbarClasses} style={appBarStyle}>
+  // return 
+  //   (
+  //     <>
+  //     <div className={`${trigger ? 'h-16' : 'h-20'} transition-all duration-300`} />
+  //     <AppBar position="fixed" color="transparent" elevation={0} className={navbarClasses} style={appBarStyle}>
+  //     <div className="w-full">
+  //       <div className="block lg:hidden">
+  //         <MobileNav />
+  //       </div>
+  //       <div className="hidden lg:block container mx-auto">
+  //         <DesktopNav />
+  //       </div>
+  //       <MobileDrawer />
+  //     </div>
+  //   </AppBar>
+
+  //     </>
+    
+  //   );
+
+  // Dans Navbar.jsx, modifiez le return comme suit:
+return (
+  <AppBar 
+    position="static" 
+    color="transparent" 
+    elevation={0} 
+    className={navbarClasses} 
+    style={appBarStyle}
+  >
     <div className="w-full">
       <div className="block lg:hidden">
         <MobileNav />
@@ -162,10 +187,7 @@ const Navbar = () => {
       <MobileDrawer />
     </div>
   </AppBar>
-
-    </>
-  
-  );
+);
 };
 
 export default Navbar;

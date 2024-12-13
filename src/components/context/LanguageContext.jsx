@@ -7,9 +7,11 @@ const translations = {
       home:'Home',
       findJob: 'Find Job',
       employers: 'Employers',
+
       candidates: 'Candidates',
-      pricing: 'Pricing Plans',
-      // support: 'Customer Support',
+      traning: 'Traning',
+      subscription: 'Subscription',
+      
       signIn: 'Sign In',
       postJob: 'Post A Jobs',
       'find job':'Find Job',
@@ -121,7 +123,8 @@ const translations = {
       findJob: 'Rechercher',
       employers: 'Employeurs',
       candidates: 'Candidats',
-      pricing: 'Tarifs',
+      traning: 'Formation',
+      subscription: 'Subscription',
       // support: 'Support Client',
       signIn: 'Connexion',
       postJob: 'Publier une offre',

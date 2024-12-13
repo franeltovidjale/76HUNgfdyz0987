@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Confirmation de Compte</title>
+  <title>Réinitialisation de mot de passe</title>
   <style>
     /* Reset */
     body, html {
@@ -11,7 +11,7 @@
       padding: 0;
       width: 100%;
       font-family: Arial, sans-serif;
-      background-color: #f3f3f3;
+      background-color: #F0F6FF; /* primary-50 */
     }
 
     /* Container */
@@ -20,13 +20,13 @@
       margin: 30px auto;
       background-color: #ffffff;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 4px 12px rgba(51, 102, 255, 0.15); /* primary-500 avec opacité */
       overflow: hidden;
     }
 
     /* Header */
     .header {
-      background-color: #E65425;
+      background-color: #3366FF; /* primary-500 */
       padding: 30px;
       text-align: center;
       color: #ffffff;
@@ -46,31 +46,31 @@
     /* Email Content */
     .email-content {
       padding: 40px 25px;
-      color: #333333;
+      color: #142966; /* primary-800 */
     }
     .email-content h2 {
       font-size: 24px;
-      color: #E65425;
+      color: #2952CC; /* primary-600 */
       margin-bottom: 15px;
       text-align: center;
     }
     .email-content p {
       font-size: 16px;
       line-height: 1.8;
-      color: #555555;
+      color: #000; /* primary-700 */
       margin: 10px 0;
       text-align: center;
     }
     .email-content a {
-      color: #E65425;
+      color: #3366FF; /* primary-500 */
       text-decoration: none;
     }
 
     /* Divider */
     .divider {
       height: 1px;
-      background-color: #E65425;
-      opacity: 0.3;
+      background-color: #8DB6FF; /* primary-300 */
+      opacity: 0.5;
       margin: 30px 0;
     }
 
@@ -80,7 +80,7 @@
       margin: 40px 0;
     }
     .button-container a {
-      background: linear-gradient(135deg, #E65425, #ff7846);
+      background: linear-gradient(135deg, #3366FF, #5B8DEF); /* primary-500 to primary-400 */
       color: #ffffff;
       padding: 14px 30px;
       border-radius: 50px;
@@ -88,28 +88,33 @@
       font-weight: bold;
       text-decoration: none;
       display: inline-block;
-      box-shadow: 0 4px 10px rgba(230, 84, 37, 0.4);
+      box-shadow: 0 4px 10px rgba(51, 102, 255, 0.3);
+      transition: all 0.3s ease;
     }
     .button-container a:hover {
-      background: linear-gradient(135deg, #ff7846, #E65425);
-      box-shadow: 0 6px 12px rgba(230, 84, 37, 0.6);
+      background: linear-gradient(135deg, #2952CC, #3366FF); /* primary-600 to primary-500 */
+      box-shadow: 0 6px 12px rgba(51, 102, 255, 0.4);
+      transform: translateY(-1px);
     }
 
     /* Footer */
     .footer {
-      background-color: #f7f7f7;
+      background-color: #F0F6FF; /* primary-50 */
       padding: 25px;
       text-align: center;
       font-size: 14px;
-      color: #777777;
+      color: #000; /* primary-700 */
     }
     .footer p {
       margin: 5px 0;
       line-height: 1.6;
     }
     .footer a {
-      color: #E65425;
+      color: #3366FF; /* primary-500 */
       text-decoration: none;
+    }
+    .footer a:hover {
+      color: #2952CC; /* primary-600 */
     }
 
     /* Responsive */
@@ -131,7 +136,7 @@
     <!-- Header -->
     <div class="header">
       <div class="header-icon">🔒</div>
-      <h1>Activez Votre Compte !</h1>
+      <h1>Réinitialisation du mot de passe</h1>
     </div>
 
     <!-- Email Content -->
@@ -145,19 +150,29 @@
       <div class="divider"></div>
 
       <!-- Confirmation Button -->
-      <div class="button-container">
+      {{-- <div class="button-container">
+        
         <a href="http://jobexpress.rps-benin.com/reset-password/{{$token}}user_email={{$user->email}}" target="_blank">Réinitialiser mon mot de passe</a>
-      </div>
-        <!-- Divider -->
-      <div class="divider"></div>
-      <p>Si vous n'avez pas fait cette demande, vous pouvez ignorer cet email.</p>
+      </div> --}}
 
-     
+      <div class="button-container">
+        <a href="{{ route('password.reset', [
+            'token' => $token,
+            'email' => $user->email
+        ]) }}" target="_blank">
+            Réinitialiser mon mot de passe
+        </a>
+    </div>
+
+      <!-- Divider -->
+      <div class="divider"></div>
+      
+      <p>Si vous n'avez pas fait cette demande, vous pouvez ignorer cet email.</p>
     </div>
 
     <!-- Footer -->
     <div class="footer">
-      <p>Si vous avez des questions, contactez-nous à <a href="mailto:contact@jobexpress.com">contact@jobexpress.com</a></p>
+      <p>Si vous avez des questions, contactez-nous à <a href="mailto:contact@happijob.com">contact@happijob.com</a></p>
       <p>&copy; 2024 JobExpress. Tous droits réservés.</p>
     </div>
   </div>

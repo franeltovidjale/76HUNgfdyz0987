@@ -32,7 +32,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::post('/verify-reset-token', [AuthController::class, 'verifyResetToken']);
-Route::post('/reset-password', [AuthController::class, 'resetPassword']);
+Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('reset.password');
 Route::get('/verify-email/{token}', [AuthController::class, 'verifyEmail']);
 
 

@@ -8,8 +8,8 @@ const VerificationRoute = ({ children }) => {
 
 export const publicRoutes = [
     {
-      path: '/login',
-      label: 'Login'
+      path: '/',
+      label: 'Home'
     },
     {
       path: '/find-job',
@@ -24,8 +24,12 @@ export const publicRoutes = [
       label: 'Candidates'
     },
     {
-      path: '/pricing',
-      label: 'Pricing'
+      path: '/traning',
+      label: 'Traning'
+    },
+    {
+      path: '/subscription',
+      label: 'Subscription'
     },
    
     {
@@ -63,8 +67,8 @@ export const publicRoutes = [
   
   export const privateRoutes = [
     {
-      path: '/dashboard',
-      label: 'Dashboard'
+      path: '/dashboard-auth',
+      label: 'DashboardAuth'
     },
     {
       path: '/profile',
@@ -103,7 +107,7 @@ export const publicRoutes = [
 
   const ForgetPassword = lazy(() => import('../components/pages/auth/ForgetPassword'));
   const ResetPassword = lazy(() => import('../components/pages/auth/ResetPassword'));
-  const ConfirmationMail  = lazy(() => import('../components/pages/auth/ConfirmationMail'));
+  const DashboardAuth  = lazy(() => import('../components/pages/authPage/DashboardAuth'));
   // const EmailVerificationPending  = lazy(() => import('../components/pages/auth/EmailVerificationPending'));
  
   // const Profile = lazy(() => import('../pages/dashboard/Profile'));
@@ -126,7 +130,7 @@ export const publicRoutes = [
     const { isAuthenticated } = useAuth();
     
     if (isAuthenticated) {
-      return <Navigate to="/dashboard" replace />;
+      return <Navigate to="/dashboard-auth" replace />;
     }
     
     return children;
@@ -204,10 +208,10 @@ export const publicRoutes = [
   
           {/* Routes protégées */}
          <Route
-            path="/dashboard"
+            path="/dashboard-auth"
             element={
               <ProtectedRoute>
-                <HomePage />
+                <DashboardAuth />
               </ProtectedRoute>
             }
           />
@@ -248,7 +252,7 @@ export const publicRoutes = [
           {/* Route 404 */}
           {/* <Route path="*" element={<NotFound />} /> */}
 
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<HomePage />} />
 
         </Routes>
       </Suspense>
