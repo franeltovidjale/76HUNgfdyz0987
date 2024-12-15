@@ -20,34 +20,7 @@ axiosClient.interceptors.request.use((config)=>{
     return config;
 });
 
-// axiosClient.interceptors.response.use(response =>{
-//     return response;
-// },error => {
-//     if (error.response && error.response.status === 401) {
-//         localStorage.removeItem('TOKEN')
-//         window.location.reload();
-//          router.navigate('/login')
-       
-//         return  error;
-//     }
-//     throw error;
-// })
 
-// axiosClient.interceptors.response.use(response => {
-//     return response;
-// }, error => {
-//     // Ne pas déconnecter sur les routes d'auth
-//     const authRoutes = ['/login', '/register'];
-//     const isAuthRoute = authRoutes.some(route => error.config.url.includes(route));
-
-//     if (error.response && error.response.status === 401 && !isAuthRoute) {
-//         localStorage.removeItem('TOKEN')
-//         window.location.reload();
-//         return error;
-//     }
-    
-//     throw error;
-// })
 
 // Intercepteur pour les réponses
 axiosClient.interceptors.response.use(
