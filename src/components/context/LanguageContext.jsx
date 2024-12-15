@@ -16,6 +16,14 @@ const translations = {
       postJob: 'Post A Jobs',
       'find job':'Find Job',
     },
+
+    sidebar: {
+      overview: "Overview",
+      appliedJobs: "Applied Jobs",
+      favorites: "Favorites",
+      jobAlerts: "Job Alerts",
+      settings: "Settings"
+    },
     // auth: {
     //   createAccount: "Create account",
     //   alreadyHaveAccount: "Already have account?",
@@ -110,11 +118,90 @@ const translations = {
         operationsResearch: {
           title: "Operations Research Analysis",
           positions: "16,627 Open Positions"
+        },
+        senioruxdesigner: {
+          title: "Senior UX Designer",
+          positions: "Contract Base"
+        },
+        softwareengineer: {
+          title: "Software Engineer",
+          positions: "Full Time"
+        },
+        juniorgraphicdesigner: {
+          title: "Junior Graphic Designer",
+          positions: "Full Time"
+        },
+        productdesigner: {
+          title: "Product Designer",
+          positions: "Full Time"
+        },
+        marketingofficer: {
+          title: "Marketing Officer",
+          positions: "Internship"
+        },
+        interactiondesigner: {
+          title: "Interaction Designer",
+          positions: "Full Time"
         }
       }
-    }
-     
     },
+    popularCategories: {
+      title: "Popular Category",
+      jobs: {
+        graphicsdesign: { title: "Graphics & Design" },
+        codeprogramming: { title: "Code & Programming" },
+        digitalmarketing: { title: "Digital Marketing" },
+        videoanimation: { title: "Video & Animation" },
+        musicaudio: { title: "Music & Audio" },
+        accountfinance: { title: "Account & Finance" },
+        healthcare: { title: "Health & Care" },
+        datascience: { title: "Data & Science" }
+      }
+    },
+    topCompanies: {
+      title: "Top Companies",
+      featured: "Featured",
+      openPosition: "Open Position"
+    }
+    
+    
+    },
+    "footer": {
+    "myJob": {
+      "title": "HappiJob",
+      "callNow": "Call now:",
+      "address": "6391 Elgin St. Celina, Delaware 10299, United States of America"
+    },
+    "quickLink": {
+      "title": "Quick Links",
+      "about": "About",
+      "contact": "Contact",
+      "pricing": "Pricing",
+      "blog": "Blog"
+    },
+    "candidate": {
+      "title": "Candidate",
+      "browseJobs": "Browse Jobs",
+      "browseEmployers": "Browse Employers",
+      "dashboard": "Candidate Dashboard",
+      "savedJobs": "Saved Jobs"
+    },
+    "employers": {
+      "title": "Employers",
+      "postJob": "Post a Job",
+      "browseCandidates": "Browse Candidates",
+      "dashboard": "Employers Dashboard",
+      "applications": "Applications"
+    },
+    "support": {
+      "title": "Support",
+      "faqs": "FAQs",
+      "privacyPolicy": "Privacy Policy",
+      "terms": "Terms & Conditions"
+    },
+    "copyright": "All rights reserved",
+    "language": "Language"
+  }
    
   },
   fr: {
@@ -132,6 +219,13 @@ const translations = {
 
      
 
+    },
+    sidebar: {
+      overview: "Vue d'ensemble",
+      appliedJobs: "Candidatures",
+      favorites: "Favoris",
+      jobAlerts: "Alertes emploi",
+      settings: "Paramètres"
     },
     // auth: {
     //   createAccount: "Créer un compte",
@@ -227,10 +321,92 @@ const translations = {
         operationsResearch: {
           title: "Analyste en Recherche Opérationnelle",
           positions: "16 627 Postes ouverts"
+        },
+        senioruxdesigner: {
+          title: "Senior UX Designer",
+          positions: "Contract Base"
+        },
+        softwareengineer: {
+          title: "Software Engineer",
+          positions: "Full Time"
+        },
+        juniorgraphicdesigner: {
+          title: "Junior Graphic Designer",
+          positions: "Full Time"
+        },
+        productdesigner: {
+          title: "Product Designer",
+          positions: "Full Time"
+        },
+        marketingofficer: {
+          title: "Marketing Officer",
+          positions: "Internship"
+        },
+        interactiondesigner: {
+          title: "Interaction Designer",
+          positions: "Full Time"
         }
+    
       }
+    },
+    popularCategories: {
+      title: "Catégories populaires",
+      jobs: {
+        graphicsdesign: { title: "Graphisme & Design" },
+        codeprogramming: { title: "Code & Programmation" },
+        digitalmarketing: { title: "Marketing Digital" },
+        videoanimation: { title: "Vidéo & Animation" },
+        musicaudio: { title: "Musique & Audio" },
+        accountfinance: { title: "Comptabilité & Finance" },
+        healthcare: { title: "Santé & Soins" },
+        datascience: { title: "Données & Science" }
+      }
+    },
+    topCompanies: {
+      title: "Meilleures Entreprises",
+      featured: "À l'honneur",
+      openPosition: "Poste Ouvert"
     }
-    }
+    
+    
+    },
+
+    "footer": {
+    "myJob": {
+      "title": "HappiJob",
+      "callNow": "Call now:",
+      "address": "6391 Elgin St. Celina, Delaware 10299, United States of America"
+    },
+    "quickLink": {
+      "title": "Quick Links",
+      "about": "About",
+      "contact": "Contact",
+      "pricing": "Pricing",
+      "blog": "Blog"
+    },
+    "candidate": {
+      "title": "Candidate",
+      "browseJobs": "Browse Jobs",
+      "browseEmployers": "Browse Employers",
+      "dashboard": "Candidate Dashboard",
+      "savedJobs": "Saved Jobs"
+    },
+    "employers": {
+      "title": "Employers",
+      "postJob": "Post a Job",
+      "browseCandidates": "Browse Candidates",
+      "dashboard": "Employers Dashboard",
+      "applications": "Applications"
+    },
+    "support": {
+      "title": "Support",
+      "faqs": "FAQs",
+      "privacyPolicy": "Privacy Policy",
+      "terms": "Terms & Conditions"
+    },
+    "copyright": "All rights reserved",
+    "language": "Language"
+  }
   }
 };
 

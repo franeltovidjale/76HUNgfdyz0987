@@ -5,9 +5,13 @@ import { Button } from '@mui/material';
 import { useTranslation } from '../../context/LanguageContext';
 import StepCreateAccount from './StepCreateAccount';
 import PopularVacancies from './Vacancies';
-// import { useAuth } from '../../context/AuthContext';
+
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import PopularCategory from './PopularCategory';
+import FeaturedJob from './FeaturedJob';
+import TopCompanies from './TopCompanies';
+import Footer from './Footer';
 
 
 const HomePage = () => {
@@ -49,9 +53,13 @@ const HomePage = () => {
         </div>
       </div>
 
-      <Stats />  
+      <Stats />  <br /><br />
       <PopularVacancies />
       <StepCreateAccount />
+      <PopularCategory />
+      <FeaturedJob />
+      <TopCompanies />
+      <Footer />
     </div>
   );
 };

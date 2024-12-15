@@ -58,10 +58,7 @@ export const publicRoutes = [
     //   path: ' /forget-password',
     //   label: 'ForgetPassword'
     // },
-    // {
-    //   path: ' /reset-password',
-    //   label: 'ResetPassword'
-    // }
+   
    
   ];
   
@@ -95,6 +92,16 @@ export const publicRoutes = [
   import { Suspense, lazy } from 'react';
   import LoadingSpinner from '../components/pages/ui/LoadingSpinner';
   import EmailVerificationPending from '../components/pages/auth/EmailVerificationPending';
+
+  
+
+  // Importez les composants dashboard
+  const DashboardOverview = lazy(() => import('../components/pages/authPage/dashboard/Overview'));
+
+const AppliedJobs = lazy(() => import('../components/pages/authPage/dashboard/AppliedJobs'));
+const Favorites = lazy(() => import('../components/pages/authPage/dashboard/Favorites'));
+const JobAlerts = lazy(() => import('../components/pages/authPage/dashboard/JobAlerts'));
+const Settings = lazy(() => import('../components/pages/authPage/dashboard/Settings'));
   
   // Lazy loading des pages pour optimiser le chargement
   const FindJobs = lazy(() => import('../components/pages/home/FindJobs'));
@@ -106,7 +113,7 @@ export const publicRoutes = [
   const Register = lazy(() => import('../components/pages/auth/Register'));
 
   const ForgetPassword = lazy(() => import('../components/pages/auth/ForgetPassword'));
-  const ResetPassword = lazy(() => import('../components/pages/auth/ResetPassword'));
+
   const DashboardAuth  = lazy(() => import('../components/pages/authPage/DashboardAuth'));
   // const EmailVerificationPending  = lazy(() => import('../components/pages/auth/EmailVerificationPending'));
  
@@ -140,7 +147,21 @@ export const publicRoutes = [
     return (
       <Suspense fallback={<LoadingSpinner />}>
         <Routes>
-          {/* Routes publiques */}
+         
+          {/* Routes du Dashboard */}
+        <Route path="/dashboard-auth" element={
+          <ProtectedRoute>
+            <DashboardAuth />
+          </ProtectedRoute>
+        }>
+          <Route index element={<DashboardOverview />} />
+          <Route path="applied-jobs" element={<AppliedJobs />} />
+          <Route path="favorites" element={<Favorites />} />
+          <Route path="job-alerts" element={<JobAlerts />} />
+          <Route path="settings" element={<Settings />} />
+        </Route>
+
+
           
           {/* <Route
             path="/"
@@ -196,15 +217,7 @@ export const publicRoutes = [
             }
           />
 
-            
-          <Route
-            path="/reset-password"
-            element={
-              <PublicRoute>
-                <ResetPassword />
-              </PublicRoute>
-            }
-          />
+         
   
           {/* Routes protégées */}
          <Route

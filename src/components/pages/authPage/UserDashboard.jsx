@@ -7,8 +7,12 @@ import {
   ChevronRight, 
   Edit2 
 } from 'lucide-react';
+import { Outlet } from 'react-router-dom';
+import DashboardLayout from '../../layouts/DashboardLayout';
 
-const DashboardAuth = () => {
+
+
+const UserDashboard = () => {
   // Données mockées pour l'exemple
   const userStats = [
     { id: 1, label: 'Offres postulées', count: 589, icon: Briefcase, color: 'bg-blue-50 text-blue-600' },
@@ -32,6 +36,7 @@ const DashboardAuth = () => {
   ];
 
   return (
+    <DashboardLayout>
     <div className="min-h-screen bg-gray-50 pt-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section profil */}
@@ -146,7 +151,9 @@ const DashboardAuth = () => {
         </div>
       </div>
     </div>
+    <Outlet />
+    </DashboardLayout>
   );
 };
 
-export default DashboardAuth;
+export default UserDashboard;

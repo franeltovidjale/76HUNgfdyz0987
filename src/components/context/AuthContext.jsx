@@ -147,25 +147,7 @@ export const AuthProvider = ({ children }) => {
     checkAuthStatus();
   }, []);
 
-  // const checkAuthStatus = async () => {
-  //   try {
-  //     const token = localStorage.getItem('TOKEN');
-  //     if (token) {
-  //       const response = await axiosClient.get('/user', {
-  //         headers: {
-  //           'Authorization': `Bearer ${token}`
-  //         }
-  //       });
-  //       setUser(response.data.user);
-  //       setIsAuthenticated(true);
-  //     }
-  //   } catch (error) {
-  //     console.error('Auth check failed:', error);
-  //     logout();
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  
 
   const checkAuthStatus = async () => {
     try {
