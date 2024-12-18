@@ -271,7 +271,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, RefreshCw } from 'lucide-react';
-import axiosClient from '../../../axios';
+import {axiosClient} from '../../../axios';
 
 const EmailVerificationPending = () => {
   const [isResending, setIsResending] = useState(false);

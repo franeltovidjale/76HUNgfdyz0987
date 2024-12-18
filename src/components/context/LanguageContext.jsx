@@ -16,12 +16,27 @@ const translations = {
       postJob: 'Post A Jobs',
       'find job':'Find Job',
     },
+    logout:{
+      logout : 'Log Out',
+    },
 
     sidebar: {
       overview: "Overview",
       appliedJobs: "Applied Jobs",
       favorites: "Favorites",
       jobAlerts: "Job Alerts",
+      settings: "Settings"
+    },
+
+    sidebarCompany: {
+      overview: "Overview",
+      employers: "Profile",
+      postAjob: "Post a Job",
+      myjobs: 'My Jobs',
+
+      savedCandidate: "Saved Candidate",
+      plans : 'Plans & Billing',
+      companies : 'All Companies',
       settings: "Settings"
     },
     // auth: {
@@ -43,7 +58,7 @@ const translations = {
     home: {
       title: 'Find a job that suits your interest & skills.',
       subtitle: 'Aliquam vitae turpis in diam convallis finibus in at risus. Nullam in scelerisque leo, eget sollicitudin velit bestibulum.',
-      searchPlaceholder: 'Job title, Keyword...',
+      searchPlaceholder: 'Job title, Keyword , company',
       locationPlaceholder: 'Your Location',
       findJobButton: 'Find Job',
       suggestion: 'Suggestion:',
@@ -70,10 +85,13 @@ const translations = {
     },
     popularVacancies: {
       title: "Most Popular Vacancies",
+      viewmore: 'view more',
       jobs: {
         anesthesiologists: {
           title: "Anesthesiologists",
-          positions: "45,904 Open Positions"
+          positions: "45,904 Open Positions",
+          
+         
         },
         surgeons: {
           title: "Surgeons",
@@ -147,6 +165,7 @@ const translations = {
     },
     popularCategories: {
       title: "Popular Category",
+      viewmore: 'view more',
       jobs: {
         graphicsdesign: { title: "Graphics & Design" },
         codeprogramming: { title: "Code & Programming" },
@@ -207,7 +226,7 @@ const translations = {
   fr: {
     nav: {
       home : 'Accueil',
-      findJob: 'Rechercher',
+      findJob: 'Trouver un job',
       employers: 'Employeurs',
       candidates: 'Candidats',
       traning: 'Formation',
@@ -215,10 +234,11 @@ const translations = {
       // support: 'Support Client',
       signIn: 'Connexion',
       postJob: 'Publier une offre',
-      'find job':'Rechercher',
+      'find job':'Trouver un job',
 
-     
-
+    },
+    logout:{
+      logout : 'Deconnexion',
     },
     sidebar: {
       overview: "Vue d'ensemble",
@@ -227,6 +247,17 @@ const translations = {
       jobAlerts: "Alertes emploi",
       settings: "Paramètres"
     },
+    sidebarCompany: {
+      overview: "Aperçu",
+      employers: "Profil",
+      postAjob: "Publier une offre",
+      myjobs: "Mes offres",
+      savedCandidate: "Candidats sauvegardés",
+      plans: "Abonnements et facturation",
+      companies: "Toutes les entreprises",
+      settings: "Paramètres"
+    },
+    
     // auth: {
     //   createAccount: "Créer un compte",
     //   alreadyHaveAccount: "Vous avez déjà un compte ?",
@@ -246,7 +277,7 @@ const translations = {
     home: {
       title: 'Trouvez un emploi qui correspond à vos intérêts et compétences.',
       subtitle: 'Découvrez des milliers d\'opportunités professionnelles adaptées à votre profil.',
-      searchPlaceholder: 'Titre du poste, Mot-clé...',
+      searchPlaceholder: 'Titre du poste, Mot-clé , entreprise',
       locationPlaceholder: 'Votre localisation',
       findJobButton: 'Rechercher',
       suggestion: 'Suggestions :',
@@ -273,6 +304,7 @@ const translations = {
     },
     popularVacancies: {
       title: "Postes les plus recherchés",
+      viewmore: 'Voir plus',
       jobs: {
         anesthesiologists: {
           title: "Anesthésistes",
@@ -351,6 +383,7 @@ const translations = {
     },
     popularCategories: {
       title: "Catégories populaires",
+      viewmore: 'Voir plus',
       jobs: {
         graphicsdesign: { title: "Graphisme & Design" },
         codeprogramming: { title: "Code & Programmation" },

@@ -406,7 +406,7 @@ const DashboardSidebar = () => {
           className="w-full flex items-center px-4 py-3 text-gray-600 rounded-lg hover:bg-gray-50 transition-colors"
         >
           <LogOut className="w-5 h-5 mr-3 flex-shrink-0" />
-          <span className="text-sm">{t('nav.signIn')}</span>
+          <span className="text-sm">{t('logout.logout')}</span>
         </button>
       )}
     </div>
@@ -436,7 +436,7 @@ const DashboardSidebar = () => {
               className="w-full px-7 py-4 flex items-center text-gray-600 hover:bg-gray-50 transition-colors"
             >
               <LogOut className="w-5 h-5 mr-3" />
-              <span className="text-sm">{t('nav.signIn')}</span>
+              <span className="text-sm">{t('logout.logout')}</span>
             </button>
           </div>
         </div>

@@ -11,10 +11,20 @@ use Illuminate\Support\Facades\Validator;
 
 class CompanyController extends Controller
 {
-    public function index()
-    {
-        return response()->json(CompanyResource::collection(Company::all()));
-    }
+    // public function index()
+    // {
+    //     return response()->json(CompanyResource::collection(Company::all()));
+    // }
+
+           
+            public function index()
+            {
+                $companies = Company::with('user')
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(8);
+                
+                return CompanyResource::collection($companies);
+            }
 
     public function store(Request $request)
     {

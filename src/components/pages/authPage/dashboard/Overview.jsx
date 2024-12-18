@@ -324,7 +324,7 @@ const Overview = () => {
 
   return (
     <div className="bg-gray-50 w-full">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-0 lg:px-8 py-6">
         {/* Section Profil */}
         <div className="mb-8 text-center md:text-left">
           <h1 className="text-3xl font-bold text-gray-900 mb-2 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-blue-600">
@@ -392,76 +392,78 @@ const Overview = () => {
 
         {/* Candidatures Récentes */}
         <div className="bg-white rounded-lg shadow-md">
-          <div className="px-6 py-4 flex justify-between items-center">
-            <h2 className="text-lg font-medium text-gray-900">Candidatures récentes</h2>
-            <Link
-              to="/dashboard-auth/applied-jobs"
-              className="text-indigo-600 text-sm hover:underline"
+  {/* En-tête */}
+  <div className="px-4 sm:px-6 py-4 flex justify-between items-center">
+    <h2 className="text-lg font-medium text-gray-900">Candidatures récentes</h2>
+    <Link
+      to="/dashboard-auth/applied-jobs"
+      className="text-indigo-600 text-sm hover:underline flex items-center"
+    >
+      <span className="hidden sm:inline">Voir tout</span>
+      <ChevronRight className="w-4 h-4 ml-1" />
+    </Link>
+  </div>
+
+  {/* Liste des candidatures */}
+  <div className="divide-y divide-gray-200">
+    {recentApplications.map((job) => (
+      <div
+        key={job.id}
+        className="px-4 sm:px-6 py-4 hover:bg-gray-50 transition-all duration-300"
+      >
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+          {/* Logo et infos job */}
+          <div className="flex items-center gap-3 flex-1">
+            <img
+              src={job.logo}
+              alt={job.company}
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg shadow-md flex-shrink-0"
+            />
+            <div className="min-w-0 flex-1">
+              <p className="font-medium text-gray-900 truncate">{job.company}</p>
+              <div className="flex flex-wrap items-center gap-2 mt-1">
+                <p className="text-sm text-gray-500">{job.location}</p>
+                <span
+                  className={`px-2 py-1 rounded-full text-xs font-medium ${getTypeStyles(
+                    job.type
+                  )}`}
+                >
+                  {job.type}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Infos secondaires */}
+          <div className="flex items-center justify-between sm:justify-end gap-4 mt-2 sm:mt-0">
+            {/* Date */}
+            <div className="text-sm text-gray-500">
+              {job.date}
+            </div>
+
+            {/* Statut */}
+            <span
+              className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap ${getStatusStyles(
+                job.status
+              )}`}
             >
-              Voir tout
-              <ChevronRight className="w-4 h-4 inline-block ml-1" />
+              {job.status}
+            </span>
+
+            {/* Actions */}
+            <Link
+              to={`/dashboard-auth/applied-jobs/${job.id}`}
+              className="text-sm text-indigo-600 font-medium flex items-center gap-1 hover:underline whitespace-nowrap"
+            >
+              <span className="hidden sm:inline">Voir détails</span>
+              <ExternalLink className="w-4 h-4" />
             </Link>
           </div>
-          <div className="divide-y divide-gray-200">
-            {recentApplications.map((job) => (
-              <div
-                key={job.id}
-                className="px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-all duration-300"
-              >
-                {/* Logo et infos job */}
-                <div className="flex items-center gap-3">
-                  <img
-                    src={job.logo}
-                    alt={job.company}
-                    className="w-12 h-12 rounded-lg shadow-md"
-                  />
-                  <div>
-                    <p className="font-medium text-gray-900">{job.company}</p>
-                    <p className="text-sm text-gray-500">
-                      {job.location}{' '}
-                      <span
-                        className={`px-2 py-1 rounded-full text-xs font-medium ${getTypeStyles(
-                          job.type
-                        )}`}
-                      >
-                        {job.type}
-                      </span>
-                    </p>
-                  </div>
-                </div>
-
-                {/* Date */}
-                <div className="text-sm text-gray-500">
-                  <span className="block sm:inline">
-                    {job.date}
-                  </span>
-                </div>
-
-                {/* Statut */}
-                <div>
-                  <span
-                    className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusStyles(
-                      job.status
-                    )}`}
-                  >
-                    {job.status}
-                  </span>
-                </div>
-
-                {/* Actions */}
-                <div>
-                  <Link
-                    to={`/dashboard-auth/applied-jobs/${job.id}`}
-                    className="text-sm text-indigo-600 font-medium flex items-center gap-1 hover:underline"
-                  >
-                    Voir détails
-                    <ExternalLink className="w-4 h-4" />
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
+      </div>
+    ))}
+  </div>
+</div>
       </div>
     </div>
   );

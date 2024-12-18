@@ -133,7 +133,7 @@
 
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axiosClient from '../../axios';
+import {axiosClient} from '../../axios';
 
 const AuthContext = createContext();
 
@@ -154,7 +154,9 @@ export const AuthProvider = ({ children }) => {
       const token = localStorage.getItem('TOKEN');
       if (token) {
         const response = await axiosClient.get('/user');
-        setUser(response.data.user);
+        console.log('Utilisateur récupéré :', response.data.user); // Debug
+         setUser(response.data.user);
+       
         setIsAuthenticated(true);
         return true;
       }
@@ -182,6 +184,27 @@ export const AuthProvider = ({ children }) => {
     navigate('/login');
   };
 
+  //  const login = async (credentials) => {
+  // try {
+  //     const response = await axiosClient.post('/login', credentials);
+      
+  //     if (!response.data.email_verified) {
+  //       navigate('/email-verification-pending');
+  //       throw new Error('Veuillez vérifier votre email avant de vous connecter.');
+  //     }
+
+  //     const token = response.data.access_token;
+  //     localStorage.setItem('TOKEN', token);
+  //     setIsAuthenticated(true);
+  //     setUser(response.data.user);
+  //     navigate('/dashboard-auth');
+      
+  //     return response;
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // };
+
   const login = async (credentials) => {
     try {
       const response = await axiosClient.post('/login', credentials);
@@ -190,12 +213,19 @@ export const AuthProvider = ({ children }) => {
         navigate('/email-verification-pending');
         throw new Error('Veuillez vérifier votre email avant de vous connecter.');
       }
-
+  
       const token = response.data.access_token;
       localStorage.setItem('TOKEN', token);
       setIsAuthenticated(true);
       setUser(response.data.user);
-      navigate('/dashboard-auth');
+  
+      // Redirection basée sur le rôle
+      const redirectPath = response.data.user.role === 'company' 
+        ? '/dashboard-company' 
+        : '/dashboard-auth';
+      
+      console.log('Redirecting after login to:', redirectPath);
+      navigate(redirectPath);
       
       return response;
     } catch (error) {

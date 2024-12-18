@@ -13,6 +13,15 @@ const axiosClient = axios.create({
     withCredentials: true
 });
 
+// Client Axios sans authentification
+const axiosClientPublic = axios.create({
+    baseURL: `${import.meta.env.VITE_API_BASE_URL}/api`,
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    }
+});
+
 axiosClient.interceptors.request.use((config)=>{
     
     config.headers.Authorization = `Bearer ${localStorage.getItem('TOKEN')}`
@@ -63,4 +72,4 @@ axiosClient.interceptors.response.use(
     }
 );
 
-export default axiosClient;
+export {axiosClient, axiosClientPublic} ;

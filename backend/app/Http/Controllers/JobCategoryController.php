@@ -11,9 +11,17 @@ use Illuminate\Support\Facades\Validator;
 
 class JobCategoryController extends Controller
 {
+    // public function index()
+    // {
+    //     return response()->json(JobCategoryResource::collection(JobCategory::all()));
+    // }
+
     public function index()
     {
-        return response()->json(JobCategoryResource::collection(JobCategory::all()));
+        $categories = JobCategory::orderBy('name')
+            ->paginate(4);
+
+        return JobCategoryResource::collection($categories);
     }
 
     public function store(Request $request)

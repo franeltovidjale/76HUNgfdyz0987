@@ -6,6 +6,8 @@
 @tailwind utilities;
 
 
+
+
 /* Styles globaux personnalisés */
 @layer base {
     html {

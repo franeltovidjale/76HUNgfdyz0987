@@ -1,24 +1,21 @@
 <?php
 
-namespace App\Models;
-
 use App\Models\Job;
 use App\Models\User;
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Company extends Model
+class Company extends Model implements HasMedia
 {
-    use HasFactory;
+    use InteractsWithMedia;
 
     protected $fillable = [
         'user_id',
         'name',
         'industry',
         'website',
-        'logo',
-        'about',
-        'phone'
+        'logo'
     ];
 
     public function user()

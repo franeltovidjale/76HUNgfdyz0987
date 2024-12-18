@@ -40,14 +40,30 @@ Route::post('/resend-verification-email', [AuthController::class, 'resendVerific
 
 Route::middleware('auth:api')->get('/user', [AuthController::class, 'user']);
 
-Route::get('/test', function () {
-    return "sss";
-})->middleware('auth:api');
 
-Route::get('/test2', function () {
-    return "erreur";
-});
 
+// Récupérer tous les emplois
+Route::get('jobs', [JobController::class, 'index']);
+
+// Récupérer un emploi spécifique
+Route::get('jobs/{id}', [JobController::class, 'show']);
+
+// Récupérer toutes les catégories de job
+Route::get('job_categories', [JobCategoryController::class, 'index'])
+        ->withoutMiddleware('auth:jwt');
+
+// Récupérer une catégorie de job spécifique
+Route::get('job_categories/{id}', [JobCategoryController::class, 'show']);
+
+// Récupérer toutes les entreprises
+Route::get('companies', [CompanyController::class, 'index']);
+
+// Récupérer une entreprise spécifique
+Route::get('companies/{id}', [CompanyController::class, 'show']);
+
+
+// Récupérer tous les candidats
+Route::get('candidates', [CandidateController::class, 'index']);
 
 
 Route::middleware('auth:api')->group(function () {

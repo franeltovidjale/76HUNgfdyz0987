@@ -162,7 +162,7 @@ const JobPilotSteps = () => {
   return (
     <div className="max-w-7xl mx-auto py-16 px-4 bg-gray-50 scroll-animate">
       <h2 className="text-center mb-16 text-3xl font-extrabold text-gray-800 animate-fadeInDown">
-        How JobExpress Works
+          How Happi Job Works
       </h2>
 
       <div

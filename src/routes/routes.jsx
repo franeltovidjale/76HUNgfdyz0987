@@ -44,6 +44,13 @@ export const publicRoutes = [
       path:'/email-verification-pending',
       label:'EmailVerificationPending'
     },
+
+    // {
+    //   path: '/jobs/detail',
+    //   label:'JobDetail'
+    // },
+
+    
   
 
     // {
@@ -89,14 +96,20 @@ export const publicRoutes = [
   import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
   import { useAuth } from '../components/context/AuthContext';
   import HomePage from '../components/pages/home/HomePage';
-  import { Suspense, lazy } from 'react';
+  import { Suspense, lazy, useEffect } from 'react';
   import LoadingSpinner from '../components/pages/ui/LoadingSpinner';
   import EmailVerificationPending from '../components/pages/auth/EmailVerificationPending';
+  import JobDetail from '../components/pages/home/JobDetail';
+
+  
 
   
 
   // Importez les composants dashboard
   const DashboardOverview = lazy(() => import('../components/pages/authPage/dashboard/Overview'));
+  const DashboardOverviewCompany = lazy(() => import('../components/pages/authPage/dashboardCompany/OverviewCompany'));
+  const PostJob = lazy(() => import('../components/pages/authPage/dashboardCompany/PostJob'));
+
 
 const AppliedJobs = lazy(() => import('../components/pages/authPage/dashboard/AppliedJobs'));
 const Favorites = lazy(() => import('../components/pages/authPage/dashboard/Favorites'));
@@ -115,7 +128,8 @@ const Settings = lazy(() => import('../components/pages/authPage/dashboard/Setti
   const ForgetPassword = lazy(() => import('../components/pages/auth/ForgetPassword'));
 
   const DashboardAuth  = lazy(() => import('../components/pages/authPage/DashboardAuth'));
-  // const EmailVerificationPending  = lazy(() => import('../components/pages/auth/EmailVerificationPending'));
+  const DashboardAuthCompany  = lazy(() => import('../components/pages/authPage/DashboardAuthCompany'));
+ 
  
   // const Profile = lazy(() => import('../pages/dashboard/Profile'));
   // const Messages = lazy(() => import('../pages/dashboard/Messages'));
@@ -124,24 +138,52 @@ const Settings = lazy(() => import('../components/pages/authPage/dashboard/Setti
   // const NotFound = lazy(() => import('../pages/NotFound'));
   
   const ProtectedRoute = ({ children }) => {
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, user } = useAuth();
+    const location = useLocation();
+   
     
     if (!isAuthenticated) {
       return <Navigate to="/login" replace />;
     }
+
+    // Vérification du rôle pour les routes spécifiques
+  if (location.pathname.startsWith('/dashboard-company') && user.role !== 'company') {
+    return <Navigate to="/dashboard-auth" replace />;
+  }
+
+  if (location.pathname.startsWith('/dashboard-auth') && user.role === 'company') {
+    return <Navigate to="/dashboard-company" replace />;
+  }
     
     return children;
   };
   
+  // const PublicRoute = ({ children }) => {
+  //   const { isAuthenticated } = useAuth();
+    
+  //   if (isAuthenticated) {
+  //     return <Navigate to="/dashboard-auth" replace />;
+  //   }
+    
+  //   return children;
+  // };
+
   const PublicRoute = ({ children }) => {
-    const { isAuthenticated } = useAuth();
-    
-    if (isAuthenticated) {
-      return <Navigate to="/dashboard-auth" replace />;
+    const { isAuthenticated, user } = useAuth();
+  
+    useEffect(() => {
+      console.log('Auth state:', { isAuthenticated, userRole: user?.role });
+    }, [isAuthenticated, user]);
+  
+    if (isAuthenticated && user) {
+      const redirectPath = user.role === 'company' ? '/dashboard-company' : '/dashboard-auth';
+      console.log('Redirecting to:', redirectPath);
+      return <Navigate to={redirectPath} replace />;
     }
-    
+  
     return children;
   };
+  
   
   const AppRouter = () => {
     return (
@@ -159,17 +201,24 @@ const Settings = lazy(() => import('../components/pages/authPage/dashboard/Setti
           <Route path="favorites" element={<Favorites />} />
           <Route path="job-alerts" element={<JobAlerts />} />
           <Route path="settings" element={<Settings />} />
+         
+
+        </Route>
+
+          {/* Routes du Dashboard Company*/}
+          <Route path="/dashboard-company" element={
+          <ProtectedRoute>
+            <DashboardAuthCompany />
+          </ProtectedRoute>
+        }>
+          <Route index element={<DashboardOverviewCompany />} />
+          <Route path="post-job" element={<PostJob />} />
+          
         </Route>
 
 
           
-          {/* <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <HomePage />
-              </ProtectedRoute>
-            } /> */}
+         
           <Route path="/find-job" element={<FindJobs />} />
           {/* <Route path="/employers" element={<Employers />} />
           <Route path="/candidates" element={<Candidates />} />
@@ -216,6 +265,16 @@ const Settings = lazy(() => import('../components/pages/authPage/dashboard/Setti
               </PublicRoute>
             }
           />
+          <Route
+            path="/jobs/detail"
+            element={
+              <ProtectedRoute>
+                <JobDetail />
+              </ProtectedRoute>
+            }
+          />
+
+
 
          
   
